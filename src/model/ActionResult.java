@@ -2,23 +2,23 @@ package model;
 
 public class ActionResult {
 
-  private State newState;
+  private Long newState;
 
   private double reward;
 
   private boolean isDone;
 
-  public ActionResult(State newState, double reward, boolean isDone) {
+  public ActionResult(Long newState, double reward, boolean isDone) {
     this.newState = newState;
     this.reward = reward;
     this.isDone = isDone;
   }
 
-  public State getNewState() {
+  public Long getNewState() {
     return newState;
   }
 
-  public void setNewState(State newState) {
+  public void setNewState(Long newState) {
     this.newState = newState;
   }
 

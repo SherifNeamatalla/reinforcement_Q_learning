@@ -1,41 +1,37 @@
 package controller;
 
 import interfaces.IEnvironmentController;
-import model.Action;
-import model.State;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class QTableGenerator {
-  public static Map<State, Map<Action, Double>> generateQTable(
-      IEnvironmentController environmentController,double worstReward,double bestReward) {
+class QTableGenerator {
+  Map<Long, Map<Long, Double>> generateQTable(
+      IEnvironmentController environmentController, double worstReward, double bestReward) {
 
-    Map<State, Map<Action, Double>> qValues = new HashMap<>();
+    Map<Long, Map<Long, Double>> qValues = new HashMap<>();
 
-    List<State> possibleStates = environmentController.getPossibleStates();
+    List<Long> possibleStates = environmentController.getPossibleStatesIDs();
 
-    List<Action> possibleActions = environmentController.getPossibleActions();
+    List<Long> possibleActions = environmentController.getPossibleActionsIDs();
 
-    for (int i = 0; i < possibleStates.size(); i++) {
+    for (Long newState : possibleStates) {
 
-      State newState = possibleStates.get(i);
-
-      Map<Action, Double> actionToQValueMap = generateRandomActionToQValues(possibleActions,worstReward,bestReward);
+      Map<Long, Double> actionToQValueMap =
+          generateRandomActionToQValues(possibleActions, worstReward, bestReward);
 
       qValues.put(newState, actionToQValueMap);
     }
     return qValues;
   }
 
-  public static Map<Action, Double> generateRandomActionToQValues(List<Action> possibleActions,double worstReward,double bestReward) {
+  private Map<Long, Double> generateRandomActionToQValues(
+      List<Long> possibleActions, double worstReward, double bestReward) {
 
-    Map<Action, Double> result = new HashMap<>();
-    for (int i = 0; i < possibleActions.size(); i++) {
-      Action newAction = possibleActions.get(i);
-
+    Map<Long, Double> result = new HashMap<>();
+    for (Long newAction : possibleActions) {
       double randomValue = ThreadLocalRandom.current().nextDouble(worstReward, bestReward);
 
       result.put(newAction, randomValue);

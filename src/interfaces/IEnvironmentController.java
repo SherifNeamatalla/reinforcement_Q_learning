@@ -1,20 +1,20 @@
 package interfaces;
 
-import model.Action;
 import model.ActionResult;
-import model.State;
 
 import java.util.List;
 
 public interface IEnvironmentController {
 
-  List<Action> getPossibleActions();
+  List<Long> getPossibleActionsIDs();
 
-  List<State> getPossibleStates();
+  List<Long> getPossibleStatesIDs();
 
-  ActionResult performAction(State state, Action action);
+  ActionResult performAction(Long state, Long action);
 
-  State reset();
+  Long reset();
 
-  boolean isDone(State state);
+  double getBestReward();
+
+  double getWorstReward();
 }
