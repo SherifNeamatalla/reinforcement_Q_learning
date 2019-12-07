@@ -1,4 +1,4 @@
 package snakeplayer.model;
 
-public class Snake {
+public enum  SnakeStateEnum {
 }

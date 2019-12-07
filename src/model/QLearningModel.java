@@ -5,29 +5,32 @@ import java.util.Map;
 
 public class QLearningModel {
 
-  private Map<Long, Map<Long, Double>> qValues;
+  private Map<String, Map<Long, Double>> qValues;
 
-  public QLearningModel(Map<Long, Map<Long, Double>> qValues) {
+  public QLearningModel(Map<String, Map<Long, Double>> qValues) {
     this.qValues = qValues;
   }
 
-  public Long predict(Long state) {
+  public Long predict(String state) {
     Map<Long, Double> actionToQValueMap = qValues.get(state);
 
     return Collections.max(actionToQValueMap.entrySet(), Map.Entry.comparingByValue()).getKey();
   }
 
-  public Map<Long, Map<Long, Double>> getWeights() {
+  public Map<String, Map<Long, Double>> getWeights() {
     return qValues;
   }
 
-  public void setWeights(Map<Long, Map<Long, Double>> qValues) {
+  public void setWeights(Map<String, Map<Long, Double>> qValues) {
     this.qValues = qValues;
   }
 
-  public double predictBestValue(Long state) {
-    Map<Long, Double> actionToQValueMap = qValues.get(state);
+  public double predictNextBestQValue(String state) {
+    Long predictedAction = predict(state);
+    return this.qValues.get(state).get(predictedAction);
+  }
 
-    return actionToQValueMap.get(predict(state));
+  public void updateState(String state, Long predictedAction, double newQValue) {
+    qValues.get(state).put(predictedAction, newQValue);
   }
 }

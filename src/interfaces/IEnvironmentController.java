@@ -8,13 +8,9 @@ public interface IEnvironmentController {
 
   List<Long> getPossibleActionsIDs();
 
-  List<Long> getPossibleStatesIDs();
+  List<String> getPossibleStatesIDs();
 
-  ActionResult performAction(Long state, Long action);
+  ActionResult performAction(String state, Long action);
 
-  Long reset();
-
-  double getBestReward();
-
-  double getWorstReward();
+  String reset();
 }
